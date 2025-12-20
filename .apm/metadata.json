@@ -1,0 +1,10 @@
+{
+  "cliVersion": "0.5.3",
+  "templateVersion": "v0.5.3+templates.1",
+  "assistants": [
+    "Claude Code",
+    "Windsurf"
+  ],
+  "installedAt": "2025-12-15T17:14:32.716Z",
+  "lastUpdated": "2025-12-15T17:23:38.444Z"
+}

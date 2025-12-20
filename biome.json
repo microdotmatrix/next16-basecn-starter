@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -20,6 +20,18 @@
       "recommended": true,
       "suspicious": {
         "noUnknownAtRules": "off"
+      },
+      "correctness": {},
+      "performance": {
+        "noBarrelFile": "off",
+        "noNamespaceImport": "off",
+        "noReExportAll": "off"
+      },
+      "a11y": {
+        "noLabelWithoutControl": "off",
+        "noSvgWithoutTitle": "off",
+        "noNoninteractiveElementInteractions": "off",
+        "noStaticElementInteractions": "off"
       }
     },
     "domains": {
@@ -33,5 +45,6 @@
         "organizeImports": "on"
       }
     }
-  }
+  },
+  "extends": ["ultracite/core", "ultracite/react", "ultracite/next"]
 }
