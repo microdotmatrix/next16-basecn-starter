@@ -32,6 +32,9 @@
         "noSvgWithoutTitle": "off",
         "noNoninteractiveElementInteractions": "off",
         "noStaticElementInteractions": "off"
+      },
+      "nursery": {
+        "useConsistentArrowReturn": "off"
       }
     },
     "domains": {

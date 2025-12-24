@@ -1,38 +1,40 @@
-import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect'
-import { isBrowser } from '@/lib/utils'
-import { useState } from 'react'
+import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect";
+import { isBrowser } from "@/lib/utils";
+import { useState } from "react";
 
 export function useIsMatchMedia(mediaQueryString: string) {
   const [isMatch, setIsMatch] = useState(() => {
-    if (!isBrowser) return false
-    return window.matchMedia(mediaQueryString).matches
-  })
+    if (!isBrowser) {
+      return false;
+    }
+    return window.matchMedia(mediaQueryString).matches;
+  });
 
   useIsomorphicLayoutEffect(() => {
-    const mediaQueryList = window.matchMedia(mediaQueryString)
+    const mediaQueryList = window.matchMedia(mediaQueryString);
 
-    setIsMatch(mediaQueryList.matches)
+    setIsMatch(mediaQueryList.matches);
 
     const listener = (event: MediaQueryListEvent) => {
-      setIsMatch(event.matches)
-    }
+      setIsMatch(event.matches);
+    };
 
     if (mediaQueryList.addEventListener) {
-      mediaQueryList.addEventListener('change', listener)
+      mediaQueryList.addEventListener("change", listener);
     } else {
       // Fallback for older browsers
-      (mediaQueryList as any).addListener(listener)
+      (mediaQueryList as MediaQueryList).addListener(listener);
     }
 
     return () => {
       if (mediaQueryList.removeEventListener) {
-        mediaQueryList.removeEventListener('change', listener)
+        mediaQueryList.removeEventListener("change", listener);
       } else {
         // Fallback for older browsers
-        (mediaQueryList as any).removeListener(listener)
+        (mediaQueryList as MediaQueryList).removeListener(listener);
       }
-    }
-  }, [mediaQueryString])
+    };
+  }, [mediaQueryString]);
 
-  return isMatch
+  return isMatch;
 }

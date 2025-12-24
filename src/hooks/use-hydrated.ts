@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from 'react'
+import { useSyncExternalStore } from "react";
 
 /**
  * Return a boolean indicating if the JS has been hydrated already.
@@ -19,13 +19,13 @@ import { useSyncExternalStore } from 'react'
  */
 
 function subscribe() {
-  return () => {}
+  return () => null;
 }
 
 export function useIsHydrated() {
   return useSyncExternalStore(
     subscribe,
     () => true,
-    () => false,
-  )
+    () => false
+  );
 }

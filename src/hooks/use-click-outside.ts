@@ -3,11 +3,11 @@ import { useEffect } from "react";
 
 export const useClickOutside = (
   ref: React.RefObject<HTMLDivElement>,
-  callback: Function
+  callback: (event: Event) => void
 ) => {
   useEffect(() => {
-    const listener = (event: any) => {
-      if (!ref.current || ref.current.contains(event.target)) {
+    const listener = (event: Event) => {
+      if (!ref.current || ref.current.contains(event.target as Node)) {
         return;
       }
       callback(event);

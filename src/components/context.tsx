@@ -8,5 +8,5 @@ export const AppContext = ({ children }: { children: React.ReactNode }) => {
         <AnchoredToastProvider>{children}</AnchoredToastProvider>
       </ToastProvider>
     </ThemeProvider>
-  )
-}
+  );
+};

@@ -7,9 +7,10 @@ import { useCallback, useMemo } from "react";
 export function useMetaColor() {
   const { resolvedTheme } = useTheme();
 
-  const metaColor = useMemo(() => {
-    return resolvedTheme !== "dark" ? meta.colors.light : meta.colors.dark;
-  }, [resolvedTheme]);
+  const metaColor = useMemo(
+    () => (resolvedTheme !== "dark" ? meta.colors.light : meta.colors.dark),
+    [resolvedTheme]
+  );
 
   const setMetaColor = useCallback((color: string) => {
     document

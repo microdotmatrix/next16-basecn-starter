@@ -1,13 +1,13 @@
-import { useEffect } from 'react'
-import { useLatest } from '@/hooks/use-latest'
+import { useLatest } from "@/hooks/use-latest";
+import { useEffect } from "react";
 
 export function useUnmount(fn: () => void) {
-  const fnRef = useLatest(fn)
+  const fnRef = useLatest(fn);
 
   useEffect(
     () => () => {
-      fnRef.current()
+      fnRef.current();
     },
-    [],
-  )
+    [fnRef]
+  );
 }

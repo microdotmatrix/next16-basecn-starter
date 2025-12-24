@@ -1,62 +1,64 @@
-import { useEffectWithTarget } from '@/hooks/use-effect-with-target'
-import type { BasicTarget } from '@/lib/create-effect-with-target'
-import { getTargetElement } from '@/lib/create-effect-with-target'
-import { useEffect, useRef, useState, type RefObject } from 'react'
+import { useEffectWithTarget } from "@/hooks/use-effect-with-target";
+import type { BasicTarget } from "@/lib/create-effect-with-target";
+import { getTargetElement } from "@/lib/create-effect-with-target";
+import { type RefObject, useEffect, useRef, useState } from "react";
 
-type CallbackType = (entry: IntersectionObserverEntry) => void
+type CallbackType = (entry: IntersectionObserverEntry) => void;
 
-export interface Options {
-  rootMargin?: string
-  threshold?: number | number[]
-  root?: BasicTarget<Element>
-  callback?: CallbackType
-}
+export type Options = {
+  rootMargin?: string;
+  threshold?: number | number[];
+  root?: BasicTarget<Element>;
+  callback?: CallbackType;
+};
 
 export function useInViewport(
   target: BasicTarget | BasicTarget[],
-  options?: Options,
+  options?: Options
 ) {
-  const { callback, ...option } = options || {}
+  const { callback, ...option } = options || {};
 
-  const [state, setState] = useState<boolean>()
-  const [ratio, setRatio] = useState<number>()
+  const [state, setState] = useState<boolean>();
+  const [ratio, setRatio] = useState<number>();
 
   useEffectWithTarget(
     () => {
-      const targets = Array.isArray(target) ? target : [target]
+      const targets = Array.isArray(target) ? target : [target];
       const els = targets
         .map((element) => getTargetElement(element))
-        .filter(Boolean)
+        .filter(Boolean);
 
       if (!els.length) {
-        return
+        return;
       }
 
       const observer = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
-            setRatio(entry.intersectionRatio)
-            setState(entry.isIntersecting)
-            callback?.(entry)
+            setRatio(entry.intersectionRatio);
+            setState(entry.isIntersecting);
+            callback?.(entry);
           }
         },
         {
           ...option,
           root: getTargetElement(options?.root),
-        },
-      )
+        }
+      );
 
-      els.forEach((el) => observer.observe(el!))
+      for (const el of els) {
+        observer.observe(el || document.body);
+      }
 
       return () => {
-        observer.disconnect()
-      }
+        observer.disconnect();
+      };
     },
     [options?.rootMargin, options?.threshold, callback],
-    target,
-  )
+    target
+  );
 
-  return [state, ratio] as const
+  return [state, ratio] as const;
 }
 
 export function useScrollIntoView<T extends HTMLDivElement>(): [

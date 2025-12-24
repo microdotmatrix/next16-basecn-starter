@@ -1,25 +1,23 @@
-import { useEffect, useState } from 'react'
-import { useDebounceFn } from '@/hooks/use-debounce-fn'
-import type { DebounceOptions } from '@/hooks/use-debounce-fn'
+import type { DebounceOptions } from "@/hooks/use-debounce-fn";
+import { useDebounceFn } from "@/hooks/use-debounce-fn";
+import { useEffect, useState } from "react";
 
 export function useDebounce<T>(
   value: T,
   debounceMs?: number,
-  options?: DebounceOptions,
+  options?: DebounceOptions
 ) {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value)
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   const { run } = useDebounceFn(
     () => {
-      setDebouncedValue(value)
+      setDebouncedValue(value);
     },
     debounceMs,
-    options,
-  )
+    options
+  );
 
-  useEffect(() => {
-    return run()
-  }, [value, run])
+  useEffect(() => run(), [run]);
 
-  return debouncedValue
+  return debouncedValue;
 }

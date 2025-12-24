@@ -3,8 +3,9 @@
 import { isBrowser } from "@/lib/utils";
 import { useEffect, useLayoutEffect, useState } from "react";
 
-export const useIsomorphicLayoutEffect =
-  isBrowser ? useLayoutEffect : useEffect;
+export const useIsomorphicLayoutEffect = isBrowser
+  ? useLayoutEffect
+  : useEffect;
 
 type UseMediaQueryOptions = {
   defaultValue?: boolean;
@@ -18,7 +19,7 @@ export function useMediaQuery(
     initializeWithValue = true,
   }: UseMediaQueryOptions = {}
 ): boolean {
-  const getMatches = (query: string): boolean => {
+  const getMatches = (): boolean => {
     if (!isBrowser) {
       return defaultValue;
     }
@@ -27,14 +28,14 @@ export function useMediaQuery(
 
   const [matches, setMatches] = useState<boolean>(() => {
     if (isBrowser && initializeWithValue) {
-      return getMatches(query);
+      return getMatches();
     }
     return defaultValue;
   });
 
   // Handles the change event of the media query.
   function handleChange() {
-    setMatches(getMatches(query));
+    setMatches(getMatches());
   }
 
   useIsomorphicLayoutEffect(() => {
